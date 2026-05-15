@@ -1,10 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import heroSrc from '../public/hero.png';
 import Search from './components/Search.jsx';
 
+const API_BASE_URL = 'https://api.themoviedb.org/3';
+
 const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
+
+  // Runs only (because of the empty dependency array, []) when this components loads 
+  // for the very first time
+  useEffect(() => {
+
+  }, []);
 
   return (
     <main>
