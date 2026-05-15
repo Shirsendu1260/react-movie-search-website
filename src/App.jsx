@@ -3,12 +3,13 @@ import './App.css'
 import heroSrc from '../public/hero.png';
 import Search from './components/Search.jsx';
 import Spinner from './components/Spinner.jsx';
+import MovieCard from './components/MovieCard.jsx';
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
-const API_READ_ACCESS_TOKEN = import.meta.env.VITE_TMDB_API_READ_ACCESS_TOKEN;
+const API_READ_ACCESS_TOKEN = import.meta.env.VITE_TMDB_API_READ_ACCESS_TOKEN; // Vite exposes env variables prefixed with VITE_ to the browser at build time
 const API_OPTIONS = {
   method: 'GET',
-  Headers: {
+  headers: {
     accept: 'application/json', // API sends JSON response
     Authorization: `Bearer ${API_READ_ACCESS_TOKEN}`
   }
@@ -30,13 +31,13 @@ const App = () => {
       const response = await fetch(endpoint, API_OPTIONS);
 
       if(!response.ok) {
-        throw new Error('Failed to fetch movies.');
+        throw new Error(`Failed to fetch movies. Status: ${response.status}`);
       }
 
       const data = await response.json();
 
-      if(data.Response === 'False') {
-        setErrorMsg(data.Error || 'Failed to fetch movies.');
+      if(data.success === false) {
+        setErrorMsg(data.status_message || 'Failed to fetch movies.');
         setMovies([]);
         return;
       }
@@ -44,18 +45,11 @@ const App = () => {
       setMovies(data.results || []);
     }
     catch(error) {
-      if(error instanceof Error) {
-        console.error(`ERROR: ${error.message}`);
-        console.error(`STATUS CODE: ${error.statusCode}`);
-      }
-      else {
-        console.error(`Error while fetching movies: ${error}`);
-      }
-
+      console.error(`Error while fetching movies: ${error.message || error}`);
       setErrorMsg('Error while fetching movies. Please try again later.');
     }
     finally {
-      // Whether we suceed or failed, stop loading
+      // Whether we succeed or failed, stop loading
       setIsLoading(false);
     }
   };
@@ -87,7 +81,7 @@ const App = () => {
           ) : (
             <ul>
               {movies.map((movie) => (
-                <p key={movie.id} className='text-white'>{movie.title}</p>
+                <MovieCard key={movie.id} movie={movie} />
               ))}
             </ul>
           )}
