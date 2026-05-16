@@ -1,5 +1,6 @@
 import starSrc from '../../public/star.svg';
 import noMovieSrc from '../../public/no-movie.png';
+import { useState } from 'react';
 
 const MovieCard = ({ movie: { 
 	title, 
@@ -8,6 +9,9 @@ const MovieCard = ({ movie: {
 	poster_path, 
 	release_date 
 } }) => {
+	// track whether the image has finished loading
+  	const [imgLoaded, setImgLoaded] = useState(false);
+
 	return (
 		<div className='movie-card'>
 			<img 
@@ -15,6 +19,12 @@ const MovieCard = ({ movie: {
 				? `https://image.tmdb.org/t/p/w500/${poster_path}` 
 				: noMovieSrc} 
 				alt={title}
+				onLoad={() => setImgLoaded(true)} // fires when image fully loads
+				className={`transition-all duration-500 ${
+		          imgLoaded 
+		            ? 'opacity-100 blur-0' // fully visible once loaded
+		            : 'opacity-0 blur-sm' // hidden/blurred while loading
+		        }`}
 			/>
 			<div className='mt-4'>
 				<h3>{title}</h3>
