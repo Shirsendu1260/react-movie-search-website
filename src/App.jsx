@@ -4,6 +4,7 @@ import heroSrc from '../public/hero.png';
 import Search from './components/Search.jsx';
 import Spinner from './components/Spinner.jsx';
 import MovieCard from './components/MovieCard.jsx';
+import Footer from './components/Footer.jsx';
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 const API_READ_ACCESS_TOKEN = import.meta.env.VITE_TMDB_API_READ_ACCESS_TOKEN; // Vite exposes env variables prefixed with VITE_ to the browser at build time
@@ -39,7 +40,7 @@ const App = () => {
       if(data.success === false) {
         setErrorMsg(data.status_message || 'Failed to fetch movies.');
         setMovies([]);
-        return;
+        throw new Error(data.status_message || 'Failed to fetch movies.');
       }
 
       setMovies(data.results || []);
@@ -72,20 +73,24 @@ const App = () => {
         </header>
 
         <section className='all-movies'>
-          <h2 className='mt-[40px]'>All Movies</h2>
+          <h2 className='mt-[40px] text-center'>All Movies</h2>
 
-          {isLoading ? (
-            <Spinner />
-          ) : errorMsg ? (
-            <p className='text-red-500'>{errorMsg}</p>
-          ) : (
-            <ul>
-              {movies.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
-            </ul>
-          )}
+          <div className='flex flex-col justify-center'>
+            {isLoading ? (
+              <Spinner />
+            ) : errorMsg ? (
+              <p className='text-red-500'>{errorMsg}</p>
+            ) : (
+              <ul>
+                {movies.map((movie) => (
+                  <MovieCard key={movie.id} movie={movie} />
+                ))}
+              </ul>
+            )}
+          </div>
         </section>
+
+        <Footer />
       </div>
     </main>
   );
