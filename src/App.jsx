@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useDebounce } from 'react-use';
 import './App.css'
 import heroSrc from '../public/hero.png';
 import Search from './components/Search.jsx';
@@ -11,24 +12,36 @@ const API_READ_ACCESS_TOKEN = import.meta.env.VITE_TMDB_API_READ_ACCESS_TOKEN; /
 const API_OPTIONS = {
   method: 'GET',
   headers: {
-    accept: 'application/json', // API sends JSON response
+    accept: 'application/json', // Tells the server to send the response in JSON format
     Authorization: `Bearer ${API_READ_ACCESS_TOKEN}`
   }
 };
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchMovies = async () => {
+  // Debounce the search input to avoid firing an API call on every keystroke.
+  // Instead, we wait until the user pauses typing for 500ms, then update
+  // debouncedSearchTerm, which is what actually triggers the API fetch.
+  useDebounce(
+    () => setDebouncedSearchTerm(searchTerm), // the function to run after the delay
+    500, // wait 500ms (half a second) of inactivity before running it
+    [searchTerm] // dependency array, re-starts the timer every time searchTerm changes
+  );
+
+  const fetchMovies = async (query = '') => {
     // Before fetching starts, start loading
     setIsLoading(true);
     setErrorMsg('');
 
     try {
-      const endpoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+      const endpoint = query
+        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
+        : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
       const response = await fetch(endpoint, API_OPTIONS);
 
       if(!response.ok) {
@@ -58,8 +71,8 @@ const App = () => {
   // Runs only (because of the empty dependency array, []) when this components loads 
   // for the very first time
   useEffect(() => {
-    fetchMovies();
-  }, []);
+    fetchMovies(debouncedSearchTerm);
+  }, [debouncedSearchTerm]);
 
   return (
     <main>
