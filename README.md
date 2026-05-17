@@ -1,7 +1,7 @@
 # React Movie Search
 
-A movie search website built with React and the TMDB API.
-Live URL: 
+A movie search website built with React and the TMDB API.<br>
+Live URL: https://react-movie-search-website-murex.vercel.app
 
 ## Tech
 
@@ -35,7 +35,6 @@ cp .env.example .env
 
 ```env
 VITE_TMDB_API_READ_ACCESS_TOKEN=your_tmdb_api_read_access_token
-VITE_TMDB_API_KEY=your_tmdb_api_key
 ```
 
 ```bash
