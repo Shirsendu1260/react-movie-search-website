@@ -1,18 +1,43 @@
-# React + Vite
+# React Movie Search
 
+A movie search website built with React and the TMDB API.
 Live URL: 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Tech
 
-Currently, two official plugins are available:
+- React 19
+- Vite
+- Tailwind CSS v4
+- TMDB API
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Search movies with debounced input (no API call on every keystroke)
+- Browse popular movies with pagination
+- Trending movies of the day
+- Trending Indian movies section
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Getting started
 
-## Expanding the ESLint configuration
+You'll need a free TMDB account to get an API key, get it from [themoviedb.org](https://www.themoviedb.org/).
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+git clone https://github.com/Shirsendu1260/react-movie-search-website.git
+cd react-movie-search-website
+npm install
+```
+
+Copy the env file and add your credentials:
+
+```bash
+cp .env.example .env
+```
+
+```env
+VITE_TMDB_API_READ_ACCESS_TOKEN=your_tmdb_api_read_access_token
+VITE_TMDB_API_KEY=your_tmdb_api_key
+```
+
+```bash
+npm run dev
+```

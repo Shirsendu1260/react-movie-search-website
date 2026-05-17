@@ -3,6 +3,7 @@ import noMovieSrc from '../../public/no-movie.png';
 import { useState } from 'react';
 
 const MovieCard = ({ movie: { 
+	id,
 	title, 
 	vote_average, 
 	original_language, 
@@ -13,12 +14,18 @@ const MovieCard = ({ movie: {
   	const [imgLoaded, setImgLoaded] = useState(false);
 
 	return (
-		<div className='movie-card'>
+		<a
+			href={`https://www.themoviedb.org/movie/${id}`}
+		    target="_blank"
+		    rel="noopener noreferrer"
+		    className='movie-card'
+		>
 			<img 
 				src={poster_path 
-				? `https://image.tmdb.org/t/p/w500/${poster_path}` 
+				? `https://image.tmdb.org/t/p/w342/${poster_path}` 
 				: noMovieSrc} 
 				alt={title}
+  				decoding="async" // Lets browser decode image without blocking rendering.
 				onLoad={() => setImgLoaded(true)} // fires when image fully loads
 				className={`transition-all duration-500 ${
 		          imgLoaded 
@@ -41,7 +48,7 @@ const MovieCard = ({ movie: {
 					<p className='year'>{release_date ? release_date.split('-')[0] : 'N/A'}</p>
 				</div>
 			</div>
-		</div>
+		</a>
 	);
 };
 

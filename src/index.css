@@ -1,37 +1,63 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800;900&family=Geist:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap");
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────
+   THEME — Deep Space Noir
+   Fonts:
+     Display  -> Urbanist   (geometric, airy, luxury)
+     Body/UI  -> Geist      (clean, modern, premium)
+     Mono     -> DM Mono    (refined, subtle)
+───────────────────────────────────────────── */
+
 @theme {
-  --color-primary: #030014;
+  --color-primary:    #05060f;
+  --color-surface:    #0d0f1e;
+  --color-card:       #0f1120;
+  --color-card-hover: #151728;
 
-  --color-light-100: #cecefb;
-  --color-light-200: #a8b5db;
+  --color-violet:     #7c5cfc;
+  --color-violet-dim: #4a3a9a;
+  --color-lavender:   #a78bfa;
 
-  --color-gray-100: #9ca4ab;
+  --color-silver-100: #edecf5;
+  --color-silver-200: #a8a4c4;
+  --color-silver-300: #64607e;
+  --color-silver-400: #28253c;
 
-  --color-dark-100: #0f0d23;
-
-  --font-dm-sans: DM Sans, sans-serif;
+  --color-light-100:  #edecf5;
+  --color-light-200:  #a8a4c4;
+  --color-gray-100:   #64607e;
+  --color-dark-100:   #0f1120;
 
   --breakpoint-xs: 480px;
-
-  --background-image-hero-pattern: url("/hero-bg.png");
 }
+
+/* ─────────────────────────────────────────────
+   BASE
+───────────────────────────────────────────── */
 
 @layer base {
   body {
-    font-family: "DM Sans", serif;
-    font-optical-sizing: auto;
-    background: #030014;
+    font-family: "Geist", sans-serif;
+    font-weight: 400;
+    background: #05060f;
+    color: #a8a4c4;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1 {
-    @apply mx-auto max-w-4xl text-center text-5xl font-bold leading-tight tracking-[-1%] text-white sm:text-[64px] sm:leading-[76px];
+    font-family: "Urbanist", sans-serif;
+    font-weight: 800;
+    @apply mx-auto max-w-4xl text-center text-5xl leading-[1.1] tracking-tight text-silver-100 sm:text-[64px];
+    letter-spacing: -0.04em;
   }
 
   h2 {
-    @apply text-2xl font-bold text-white sm:text-3xl;
+    font-family: "Geist", sans-serif;
+    font-weight: 500;
+    @apply text-lg text-silver-300 sm:text-xl uppercase;
+    letter-spacing: 0.22em;
   }
 
   main {
@@ -43,19 +69,159 @@
   }
 
   header img {
-    @apply w-full max-w-lg h-auto object-contain mx-auto drop-shadow-md;
+    @apply w-full max-w-xl h-auto object-contain mx-auto;
+    filter: drop-shadow(0 0 48px rgba(124, 92, 252, 0.18));
   }
 }
 
+/* ─────────────────────────────────────────────
+   COMPONENTS
+───────────────────────────────────────────── */
+
 @layer components {
+
+  /* Background — pure CSS violet nebula, no images */
   .pattern {
-    @apply bg-hero-pattern w-full h-screen bg-center bg-cover absolute z-0;
+    @apply w-full h-screen absolute z-0;
+    background-color: #05060f;
+    background-image:
+      radial-gradient(ellipse 65% 45% at 50% -8%,   rgba(124, 92, 252, 0.22) 0%, transparent 65%),
+      radial-gradient(ellipse 38% 32% at  8% 55%,   rgba(90,  58, 210, 0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 32% 28% at 92% 58%,   rgba(90,  58, 210, 0.08) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 28% at 50% 115%,  rgba(55,  35, 160, 0.14) 0%, transparent 55%);
   }
 
+  /* Page wrapper */
   .wrapper {
     @apply px-5 py-12 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10;
   }
 
+  /* Search — frosted pill */
+  .search {
+    @apply w-full mt-10 max-w-2xl mx-auto;
+    background: rgba(15, 17, 32, 0.6);
+    border: 1px solid rgba(124, 92, 252, 0.18);
+    border-radius: 9999px;
+    padding: 0 1.5rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+
+    &:focus-within {
+      border-color: rgba(124, 92, 252, 0.55);
+      box-shadow:
+        0 0 0 3px rgba(124, 92, 252, 0.07),
+        0 0 24px rgba(124, 92, 252, 0.10);
+    }
+
+    & div {
+      @apply relative flex items-center;
+    }
+
+    & img {
+      @apply absolute left-0 h-[15px] w-[15px];
+      filter: invert(52%) sepia(45%) saturate(900%) hue-rotate(222deg);
+      opacity: 0.6;
+    }
+
+    & input {
+      @apply w-full bg-transparent py-3.5 pr-4 pl-6 text-[15px] text-silver-100 outline-hidden;
+      font-family: "Geist", sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+
+      &::placeholder {
+        color: #5d5a7b;
+      }
+    }
+  }
+
+  /* Movie grid */
+  .all-movies {
+    @apply mt-10;
+  }
+
+  .all-movies ul {
+    @apply grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5;
+    width: 100%;
+  }
+  /* Movie card */
+  .movie-card {
+    @apply rounded-xl overflow-hidden relative cursor-pointer;
+    background: #0f1120;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+    text-decoration: none;
+    display: block;
+
+    &:hover {
+      transform: translateY(-4px);
+      border-color: rgba(124, 92, 252, 0.38);
+      box-shadow:
+        0 18px 48px rgba(0, 0, 0, 0.65),
+        0 0 28px rgba(124, 92, 252, 0.09);
+    }
+
+    & img {
+      @apply w-full h-auto;
+      display: block;
+      aspect-ratio: 2/3;
+      object-fit: cover;
+    }
+
+    & > div {
+      @apply px-3.5 pb-3.5 pt-3;
+    }
+
+    & h3 {
+      font-family: "Geist", sans-serif;
+      font-weight: 500;
+      @apply text-silver-100 text-[13px] line-clamp-1;
+      letter-spacing: 0.005em;
+    }
+
+    & .content {
+      @apply mt-1.5 flex flex-row items-center flex-wrap gap-2;
+    }
+
+    & .rating {
+      @apply flex flex-row items-center gap-1;
+    }
+
+    & .rating img {
+      @apply size-3 object-contain;
+      filter: invert(52%) sepia(80%) saturate(700%) hue-rotate(222deg) brightness(1.2);
+    }
+
+    & .rating p {
+      font-family: "DM Mono", monospace;
+      font-weight: 500;
+      @apply text-[11px];
+      color: #a78bfa;
+    }
+
+    & .content span {
+      color: #28253c;
+      @apply text-xs;
+    }
+
+    & .content .lang {
+      font-family: "DM Mono", monospace;
+      font-weight: 400;
+      @apply text-[11px] uppercase;
+      color: #77758a;
+      letter-spacing: 0.06em;
+    }
+
+    & .content .year {
+      font-family: "DM Mono", monospace;
+      font-weight: 400;
+      @apply text-[11px];
+      color: #77758a;
+    }
+  }
+
+  /* Trending */
   .trending {
     @apply mt-20;
 
@@ -76,79 +242,30 @@
     }
   }
 
-  .search {
-    @apply w-full bg-light-100/5 px-4 py-3 rounded-lg mt-10 max-w-3xl mx-auto;
-
-    & div {
-      @apply relative flex items-center;
-    }
-
-    & img {
-      @apply absolute left-2 h-5 w-5;
-    }
-
-    & input {
-      @apply w-full bg-transparent py-2 sm:pr-10 pl-10 text-base text-gray-200 placeholder-light-200 outline-hidden;
-    }
-  }
-
-  .all-movies {
-    @apply space-y-9;
-
-    & ul {
-      @apply grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
-    }
-  }
-
-  .movie-card {
-    @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10;
-
-    & img {
-      @apply rounded-lg h-auto w-full;
-    }
-
-    & h3 {
-      @apply text-white font-bold text-base line-clamp-1;
-    }
-
-    & .content {
-      @apply mt-2 flex flex-row items-center flex-wrap gap-2;
-    }
-
-    & .rating {
-      @apply flex flex-row items-center gap-1;
-    }
-
-    & .rating img {
-      @apply size-4 object-contain;
-    }
-
-    & .rating p {
-      @apply font-bold text-base text-white;
-    }
-
-    & .content span {
-      @apply text-sm text-gray-100;
-    }
-
-    & .content .lang {
-      @apply capitalize text-gray-100 font-medium text-base;
-    }
-
-    & .content .year {
-      @apply text-gray-100 font-medium text-base;
-    }
+  .trending-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
   }
 }
 
+/* ─────────────────────────────────────────────
+   UTILITIES
+───────────────────────────────────────────── */
+
 @utility text-gradient {
-  @apply bg-linear-to-r from-[#D6C7FF] to-[#AB8BFF] bg-clip-text text-transparent;
+  background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 40%, #7c5cfc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 @utility fancy-text {
-  -webkit-text-stroke: 5px rgba(206, 206, 251, 0.5);
+  -webkit-text-stroke: 3px rgba(124, 92, 252, 0.22);
   font-size: 190px;
-  font-family: "Bebas Neue", sans-serif;
+  font-family: "Urbanist", sans-serif;
+  font-weight: 900;
 }
 
 @utility hide-scrollbar {
@@ -158,4 +275,111 @@
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+/* ─────────────────────────────────────────────
+   SPINNER FIX
+   Spinner.jsx uses undefined classes `fill-purple`
+   and `text-neutral-tertiary`. Overridden here.
+───────────────────────────────────────────── */
+
+[role="status"] svg {
+  color: rgba(40, 37, 60, 0.9);
+  fill: #7c5cfc;
+}
+
+/* ─────────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────────── */
+
+footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+footer p,
+footer a {
+  font-family: "Geist", sans-serif;
+  font-weight: 400;
+  font-size: 0.7rem;
+  color: #28253c;
+  letter-spacing: 0.02em;
+}
+
+footer a:hover {
+  color: #a78bfa;
+  transition: color 0.2s ease;
+}
+
+/* ─────────────────────────────────────────────
+   SECTION HEADING ACCENT
+───────────────────────────────────────────── */
+
+.all-movies h2::after {
+  content: '';
+  display: block;
+  width: 1.25rem;
+  height: 1.5px;
+  background: linear-gradient(90deg, #7c5cfc, transparent);
+  margin: 0.45rem auto 0;
+}
+
+/* ─────────────────────────────────────────────
+   PAGINATION
+───────────────────────────────────────────── */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  margin-top: 3rem;
+}
+
+.pagination button {
+  background: transparent;
+  border: none;
+
+  color: #64607e;
+
+  font-family: "Geist", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  color: #edecf5;
+  transform: translateY(-1px);
+}
+
+.pagination button:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+
+  background: rgba(124, 92, 252, 0.08);
+
+  color: #edecf5;
+
+  font-family: "DM Mono", monospace;
+  font-size: 0.85rem;
+
+  border: 1px solid rgba(124, 92, 252, 0.12);
 }
