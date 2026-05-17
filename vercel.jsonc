@@ -1,0 +1,53 @@
+{
+  "headers": [
+    {
+      // Apply headers to all routes
+      "source": "/(.*)",
+
+      "headers": [
+        {
+          // Prevent iframe embedding (clickjacking protection)
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+
+        {
+          // Prevent browser from guessing file types
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+
+        {
+          // Limit referrer info shared with external sites
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+
+        {
+          /*
+            Content Security Policy (CSP)
+
+            Restricts where resources can load from.
+            Helps reduce XSS/script injection risks.
+          */
+          "key": "Content-Security-Policy",
+
+          /*
+            default-src 'self'
+            -> Only allow resources from your own domain by default
+
+            img-src
+            -> Allow HTTPS & base64 images (useful for TMDB/CDNs)
+
+            script-src
+            -> Allow scripts only from your domain
+
+            style-src
+            -> Allow local + inline styles
+          */
+          "value": "default-src 'self'; img-src 'self' https: data:; script-src 'self'; style-src 'self' 'unsafe-inline';"
+        }
+      ]
+    }
+  ]
+}
