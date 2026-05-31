@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react';
 import { useDebounce } from 'react-use';
 import Search from './components/Search.jsx';
 import Spinner from './components/Spinner.jsx';
@@ -17,6 +17,25 @@ const App = () => {
   const [trendingIndianMovies, setTrendingIndianMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+
+  // useRef gives a way to directly access a DOM element from React code — like grabbing it 
+  // with document.getElementById() but the React way.
+  const trendingIndiaRef = useRef(null);
+  const trendingTodayRef = useRef(null);
+
+  const scrollSection = (ref, direction) => {
+    if(ref.current) {
+      ref.current.scrollBy({
+        left: direction === 'left' ? -300 : 300, behavior: 'smooth'
+      });
+    }
+  };
+  // .current is the actual DOM element. We can call any native DOM method on it — in our case 
+  // scrollBy().
+  // Unlike useState, changing a ref does not re-render the component. It's just a direct 
+  // reference to the element sitting in the DOM.
+  // ref.current.scrollBy() is a plain browser DOM method — nothing React-specific. useRef just gave 
+  // us the handle to call it on the right element.
 
   const fetchMovies = async (query = '', page = 1) => {
     // Before fetching starts, start loading
@@ -137,9 +156,15 @@ const App = () => {
 
         {trendingIndianMovies.length > 0 && (
           <section className='trending'>
-            <h2>Trending in India</h2>
-
-            <ul>
+            <div className='flex justify-between items-center'>
+              <h2>Trending in India</h2>
+              <div className='flex gap-2'>
+                <button className='scroll-btn' onClick={() => scrollSection(trendingIndiaRef, 'left')}>&#8592;</button>
+                <button className='scroll-btn' onClick={() => scrollSection(trendingIndiaRef, 'right')}>&#8594;</button>
+              </div>
+            </div>
+ 
+            <ul ref={trendingIndiaRef}>
               {trendingIndianMovies.map((movie, index) => (
                 <li key={movie.id}>
                   <TrendingMovieCard movie={movie} index={index} />
@@ -148,12 +173,18 @@ const App = () => {
             </ul>
           </section>
         )}
-
+ 
         {trendingMoviesOfTheDay.length > 0 && (
           <section className='trending'>
-            <h2>Trending Movies of Today</h2>
-
-            <ul>
+            <div className='flex justify-between items-center'>
+              <h2>Trending Movies of Today</h2>
+              <div className='flex gap-2'>
+                <button className='scroll-btn' onClick={() => scrollSection(trendingTodayRef, 'left')}>&#8592;</button>
+                <button className='scroll-btn' onClick={() => scrollSection(trendingTodayRef, 'right')}>&#8594;</button>
+              </div>
+            </div>
+ 
+            <ul ref={trendingTodayRef}>
               {trendingMoviesOfTheDay.map((movie, index) => (
                 <li key={movie.id}>
                   <TrendingMovieCard movie={movie} index={index} />

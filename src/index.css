@@ -226,7 +226,7 @@
     @apply mt-20;
 
     & ul {
-      @apply flex flex-row overflow-y-auto gap-5 -mt-10 w-full hide-scrollbar;
+      @apply flex flex-row overflow-x-auto gap-5 -mt-10 w-full hide-scrollbar;
     }
 
     & ul li {
@@ -247,6 +247,28 @@
     flex-direction: row;
     align-items: center;
     text-decoration: none;
+  }
+}
+
+.scroll-btn {
+  background: transparent;
+  border: 1px solid rgba(124, 92, 252, 0.3);
+  color: #a78bfa;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(124, 92, 252, 0.15);
+    border-color: #a78bfa;
+    color: #edecf5;
+    transform: translateY(-1px);
   }
 }
 
