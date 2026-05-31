@@ -23,12 +23,8 @@ const App = () => {
   const trendingIndiaRef = useRef(null);
   const trendingTodayRef = useRef(null);
 
-  const scrollSection = (e, ref, direction) => {
-    // buttons need e.preventDefault() and e.stopPropagation() to block the click from bubbling into the <a> tag clicking
-    e.preventDefault();
-    e.stopPropagation();
-
-    if(ref.current) {
+  const scrollSection = (ref, direction) => {
+    if (ref.current) {
       ref.current.scrollBy({ left: direction === 'left' ? -300 : 300, behavior: 'smooth' });
     }
   };
@@ -158,9 +154,9 @@ const App = () => {
 
         {trendingIndianMovies.length > 0 && (
           <section className='trending'>
-            <div className='flex justify-between items-center'>
+            <div className='trending-header'>
               <h2>Trending in India</h2>
-              <div className='flex gap-2'>
+              <div className='scroll-btns'>
                 <button className='scroll-btn' onClick={() => scrollSection(trendingIndiaRef, 'left')}>&#8592;</button>
                 <button className='scroll-btn' onClick={() => scrollSection(trendingIndiaRef, 'right')}>&#8594;</button>
               </div>
@@ -178,9 +174,9 @@ const App = () => {
  
         {trendingMoviesOfTheDay.length > 0 && (
           <section className='trending'>
-            <div className='flex justify-between items-center'>
+            <div className='trending-header'>
               <h2>Trending Movies of Today</h2>
-              <div className='flex gap-2'>
+              <div className='scroll-btns'>
                 <button className='scroll-btn' onClick={() => scrollSection(trendingTodayRef, 'left')}>&#8592;</button>
                 <button className='scroll-btn' onClick={() => scrollSection(trendingTodayRef, 'right')}>&#8594;</button>
               </div>

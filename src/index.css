@@ -225,6 +225,19 @@
   .trending {
     @apply mt-20;
 
+    & .trending-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    & .scroll-btns {
+      display: flex;
+      gap: 8px;
+    }
+
     & ul {
       @apply flex flex-row overflow-x-auto gap-5 -mt-10 w-full hide-scrollbar;
     }
@@ -251,27 +264,23 @@
 }
 
 .scroll-btn {
-  background: #7c5cfc;
-  border: none;
-  color: #ffffff;
-  width: 34px;
-  height: 34px;
+  background: rgba(124, 92, 252, 0.15);
+  border: 1px solid rgba(124, 92, 252, 0.4);
+  color: #c4b5fd;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
+  transition: background 0.2s ease, border-color 0.2s ease;
 
   &:hover {
-    background: #6a4de0;
-    transform: scale(1.08);
-  }
-
-  &:active {
-    transform: scale(0.95);
+    background: rgba(124, 92, 252, 0.35);
+    border-color: #a78bfa;
+    color: #fff;
   }
 }
 
