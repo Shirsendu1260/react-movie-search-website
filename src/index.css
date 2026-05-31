@@ -251,11 +251,11 @@
 }
 
 .scroll-btn {
-  background: transparent;
-  border: 1px solid rgba(124, 92, 252, 0.3);
-  color: #a78bfa;
-  width: 32px;
-  height: 32px;
+  background: #7c5cfc;
+  border: none;
+  color: #ffffff;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   cursor: pointer;
   font-size: 16px;
@@ -263,12 +263,15 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  flex-shrink: 0;
 
   &:hover {
-    background: rgba(124, 92, 252, 0.15);
-    border-color: #a78bfa;
-    color: #edecf5;
-    transform: translateY(-1px);
+    background: #6a4de0;
+    transform: scale(1.08);
+  }
+
+  &:active {
+    transform: scale(0.95);
   }
 }
 

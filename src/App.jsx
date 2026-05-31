@@ -23,11 +23,13 @@ const App = () => {
   const trendingIndiaRef = useRef(null);
   const trendingTodayRef = useRef(null);
 
-  const scrollSection = (ref, direction) => {
+  const scrollSection = (e, ref, direction) => {
+    // buttons need e.preventDefault() and e.stopPropagation() to block the click from bubbling into the <a> tag clicking
+    e.preventDefault();
+    e.stopPropagation();
+
     if(ref.current) {
-      ref.current.scrollBy({
-        left: direction === 'left' ? -300 : 300, behavior: 'smooth'
-      });
+      ref.current.scrollBy({ left: direction === 'left' ? -300 : 300, behavior: 'smooth' });
     }
   };
   // .current is the actual DOM element. We can call any native DOM method on it — in our case 
