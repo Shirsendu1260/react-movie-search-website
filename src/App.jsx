@@ -25,7 +25,7 @@ const App = () => {
 
   const scrollSection = (ref, direction) => {
     if (ref.current) {
-      ref.current.scrollBy({ left: direction === 'left' ? -300 : 300, behavior: 'smooth' });
+      ref.current.scrollBy({ left: direction === 'left' ? -500 : 500, behavior: 'smooth' });
     }
   };
   // .current is the actual DOM element. We can call any native DOM method on it — in our case 
@@ -157,8 +157,16 @@ const App = () => {
             <div className='trending-header'>
               <h2>Trending in India</h2>
               <div className='scroll-btns'>
-                <button className='scroll-btn' onClick={() => scrollSection(trendingIndiaRef, 'left')}>&#8592;</button>
-                <button className='scroll-btn' onClick={() => scrollSection(trendingIndiaRef, 'right')}>&#8594;</button>
+                <button className='scroll-btn' onClick={() => scrollSection(trendingIndiaRef, 'left')}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M15 18l-6-6 6-6" />
+                  </svg>
+                </button>
+                <button className='scroll-btn' onClick={() => scrollSection(trendingIndiaRef, 'right')}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </button>
               </div>
             </div>
  
@@ -177,8 +185,16 @@ const App = () => {
             <div className='trending-header'>
               <h2>Trending Movies of Today</h2>
               <div className='scroll-btns'>
-                <button className='scroll-btn' onClick={() => scrollSection(trendingTodayRef, 'left')}>&#8592;</button>
-                <button className='scroll-btn' onClick={() => scrollSection(trendingTodayRef, 'right')}>&#8594;</button>
+                <button className='scroll-btn' onClick={() => scrollSection(trendingTodayRef, 'left')}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M15 18l-6-6 6-6" />
+                  </svg>
+                </button>
+                <button className='scroll-btn' onClick={() => scrollSection(trendingTodayRef, 'right')}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </button>
               </div>
             </div>
  
